@@ -96,5 +96,5 @@ distances = DistanceCalculator.calculate(sites)
 print(f"   Расстояния: {distances}")
 
 print("\n" + "=" * 60)
-print("✅ ВСЕ 11 МОДУЛЕЙ ВЫПОЛНЕНЫ!")
+print("ВСЕ 11 МОДУЛЕЙ ВЫПОЛНЕНЫ!")
 print("=" * 60)
