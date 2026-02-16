@@ -33,3 +33,11 @@ secret_message = [
 #   Если нужны вычисления и разные пробы - делайте это в консоли пайтона, тут нужен только результат
 
 # TODO вывести расшифрованное сообщение
+word1 = secret_message[0][3]                    # 4-я буква (индекс 3)
+word2 = secret_message[1][9:13]                  # буквы с 10 по 13 (индексы 9-12)
+word3 = secret_message[2][5:15:2]                 # буквы с 6 по 15 через одну
+word4 = secret_message[3][12:7:-1]                # буквы с 8 по 13 в обратном порядке
+word5 = secret_message[4][20:15:-1]                # буквы с 17 по 21 в обратном порядке
+
+decrypted_message = word1 + ' ' + word2 + ' ' + word3 + ' ' + word4 + ' ' + word5
+print(decrypted_message)

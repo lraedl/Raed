@@ -36,3 +36,23 @@ sweets = {
     # TODO тут с клавиатуры введите другую сладость и далее словарь магазинов
 }
 # Указать надо только по 2 магазина с минимальными ценами
+sweets = {}
+
+# Собираем все уникальные названия сладостей
+all_sweets = set()
+for shop_name, items in shops.items():
+    for item in items:
+        all_sweets.add(item['name'])
+
+# Для каждой сладости собираем информацию из магазинов
+for sweet in all_sweets:
+    sweets[sweet] = []
+    for shop_name, items in shops.items():
+        for item in items:
+            if item['name'] == sweet:
+                sweets[sweet].append({
+                    'shop': shop_name,
+                    'price': item['price']
+                })
+
+print(sweets)
