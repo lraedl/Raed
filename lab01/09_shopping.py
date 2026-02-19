@@ -38,13 +38,11 @@ sweets = {
 # Указать надо только по 2 магазина с минимальными ценами
 sweets = {}
 
-# Собираем все уникальные названия сладостей
 all_sweets = set()
 for shop_name, items in shops.items():
     for item in items:
         all_sweets.add(item['name'])
 
-# Для каждой сладости собираем информацию из магазинов
 for sweet in all_sweets:
     sweets[sweet] = []
     for shop_name, items in shops.items():
@@ -54,5 +52,7 @@ for sweet in all_sweets:
                     'shop': shop_name,
                     'price': item['price']
                 })
+    sweets[sweet].sort(key=lambda x: x['price'])
+    sweets[sweet] = sweets[sweet][:2]
 
 print(sweets)
