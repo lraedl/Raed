@@ -1,28 +1,24 @@
 import math
 
-# ==========================================
 # ЗАДАНИЕ 1: Вычисление вложенных корней x_n
-# ==========================================
 
-# 1. Рекурсивный способ
+# 1. Рекурсия
 def get_root_recursive(n):
     if n == 1:
         return math.sqrt(3)
     else:
         return math.sqrt(3 + get_root_recursive(n - 1))
 
-# 2. Итеративный способ (через цикл)
+# 2. через цикл
 def get_root_iterative(n):
     result = 0
     for i in range(n):
         result = math.sqrt(3 + result)
     return result
 
-# ==========================================
 # ЗАДАНИЕ 2: Пересечение двух списков
-# ==========================================
 
-# 1. Рекурсивный способ
+# 1. Рекурсия
 def intersect_recursive(list1, list2):
     if not list1:
         return []
@@ -35,7 +31,7 @@ def intersect_recursive(list1, list2):
     else:
         return intersect_recursive(rest, list2)
 
-# 2. Итеративный способ (через цикл)
+# 2. через цикл
 def intersect_iterative(list1, list2):
     result = []
     for item in list1:
@@ -64,3 +60,5 @@ print(f"Результат (цикл):     {intersect_iterative(a, b)}")
 # доп тесты
 print(f"Тест [5, 8, 2] и [2, 9, 1]: {intersect_iterative([5, 8, 2], [2, 9, 1])}")
 print(f"Тест [5, 8, 2] и [7, 4]:    {intersect_iterative([5, 8, 2], [7, 4])}")
+print(f"Результат (рекурсия): {intersect_recursive([1,2,3,'er'],['er',4,5,6,3])}")
+print(f"Результат (цикл):     {intersect_iterative([1,2,3,'er'],['er',4,5,6,3])}")

@@ -4,7 +4,7 @@ from tkinter import ttk, messagebox, filedialog
 # Подключаем наш пакет particles (папка particles/__init__.py)
 from particles import PARTICLES, udelny_zaryad, kompton, v_word, v_excel
 
-# ─── Функция расчёта ────────────────────────────────────────────
+# Функция расчёта
 
 def rasschitat():
     name = combo.get()           # берём выбранное имя из выпадающего списка
@@ -26,7 +26,7 @@ def rasschitat():
     app.result = {"name": name, "mass": mass, "charge": charge,
                   "spec_charge": spec, "compton": komp}
 
-# ─── Функции сохранения ─────────────────────────────────────────
+# Функции сохранения в Word и Excel
 
 def sohranit_word():
     if not hasattr(app, "result"):
@@ -84,7 +84,7 @@ def sohranit_vse_excel():
         v_excel(results, path)
         messagebox.showinfo("Готово", f"Сохранено: {path}")
 
-# ─── Создание окна ──────────────────────────────────────────────
+#  Создание окна 
 
 app = tk.Tk()
 app.title("Элементарные частицы")
@@ -149,5 +149,5 @@ tk.Button(frame_save2, text="📄 Все в .docx", font=FONT,
 tk.Button(frame_save2, text="📊 Все в .xlsx", font=FONT,
           command=sohranit_vse_excel).grid(row=0, column=1, padx=6)
 
-# ─── Запуск главного цикла ──────────────────────────────────────
+# Запуск главного цикла 
 app.mainloop()
