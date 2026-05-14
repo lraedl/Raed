@@ -13,16 +13,16 @@ import FreeSimpleGUI as sg
 from docx import Document
 import openpyxl
 
-# ══════════════════════════════════════════════════════
+
 #  Физические константы
-# ══════════════════════════════════════════════════════
+
 H = 6.626e-34   # постоянная Планка (Дж·с)
 C = 3e8         # скорость света (м/с)
 
 
-# ══════════════════════════════════════════════════════
+
 #  Абстрактный базовый класс
-# ══════════════════════════════════════════════════════
+
 class Particle(ABC):
     """
     Абстрактный класс — шаблон для любой элементарной частицы.
@@ -33,7 +33,7 @@ class Particle(ABC):
         self.name = name    # имя частицы (через property ниже)
         self.mass = mass    # масса (через property ниже)
 
-    # ── managed-атрибут: name ─────────────────────────
+    # managed-атрибут: name 
     @property
     def name(self):
         return self._name
@@ -44,7 +44,7 @@ class Particle(ABC):
             raise ValueError("Имя должно быть непустой строкой")
         self._name = value
 
-    # ── managed-атрибут: mass ─────────────────────────
+    # managed-атрибут: mass 
     @property
     def mass(self):
         return self._mass
@@ -55,7 +55,7 @@ class Particle(ABC):
             raise ValueError("Масса должна быть больше нуля")
         self._mass = value
 
-    # ── Абстрактные методы — каждый подкласс ОБЯЗАН их реализовать ──
+    # Абстрактные методы — каждый подкласс ОБЯЗАН их реализовать 
     @abstractmethod
     def udelny_zaryad(self) -> float:
         """Удельный заряд (Кл/кг)."""
@@ -68,7 +68,7 @@ class Particle(ABC):
     def info(self) -> dict:
         """Словарь с результатами расчётов для отчёта."""
 
-    # ── dunder-методы ─────────────────────────────────
+    # dunder-методы 
     def __str__(self):
         # Вызывается при print(particle)
         return f"{self.name}: масса={self.mass:.3e} кг"
@@ -78,9 +78,8 @@ class Particle(ABC):
         return f"Particle(name={self._name!r}, mass={self._mass!r})"
 
 
-# ══════════════════════════════════════════════════════
 #  Подкласс 1: заряженная частица (электрон, протон)
-# ══════════════════════════════════════════════════════
+
 class ChargedParticle(Particle):
     """Частица с ненулевым зарядом."""
 
@@ -88,7 +87,7 @@ class ChargedParticle(Particle):
         super().__init__(name, mass)   # вызываем __init__ родителя
         self.charge = charge           # заряд (через property)
 
-    # ── managed-атрибут: charge ───────────────────────
+    # managed-атрибут: charge 
     @property
     def charge(self):
         return self._charge
@@ -99,7 +98,7 @@ class ChargedParticle(Particle):
             raise ValueError("Заряд заряженной частицы должен быть > 0")
         self._charge = value
 
-    # ── Реализация абстрактных методов ────────────────
+    # Реализация абстрактных методов 
     def udelny_zaryad(self) -> float:
         return self._charge / self._mass
 
@@ -115,7 +114,7 @@ class ChargedParticle(Particle):
             "compton":     self.kompton(),
         }
 
-    # ── dunder-методы ─────────────────────────────────
+    # dunder-методы 
     def __str__(self):
         return (f"{self._name}: масса={self._mass:.3e} кг, "
                 f"заряд={self._charge:.3e} Кл")
@@ -127,16 +126,16 @@ class ChargedParticle(Particle):
         return self._mass == other._mass and self._charge == other._charge
 
 
-# ══════════════════════════════════════════════════════
+
 #  Подкласс 2: нейтральная частица (нейтрон)
-# ══════════════════════════════════════════════════════
+
 class NeutralParticle(Particle):
     """Частица без заряда — нейтрон."""
 
     def __init__(self, name: str, mass: float):
         super().__init__(name, mass)
 
-    # ── Реализация абстрактных методов ────────────────
+    #  Реализация абстрактных методов 
     def udelny_zaryad(self) -> float:
         return 0.0   # нейтрон не имеет заряда
 
@@ -152,7 +151,7 @@ class NeutralParticle(Particle):
             "compton":     self.kompton(),
         }
 
-    # ── dunder-методы ─────────────────────────────────
+    # dunder-методы 
     def __str__(self):
         return f"{self._name}: масса={self._mass:.3e} кг, заряд=0 (нейтральная)"
 
@@ -162,9 +161,9 @@ class NeutralParticle(Particle):
         return self._mass == other._mass
 
 
-# ══════════════════════════════════════════════════════
+
 #  Класс для сохранения отчётов
-# ══════════════════════════════════════════════════════
+
 class Report:
     """Сохраняет список результатов в Word или Excel."""
 
@@ -201,9 +200,9 @@ class Report:
         wb.save(path)
 
 
-# ══════════════════════════════════════════════════════
+
 #  Список всех частиц
-# ══════════════════════════════════════════════════════
+
 PARTICLES = [
     ChargedParticle("Электрон", mass=9.109e-31,  charge=1.602e-19),
     ChargedParticle("Протон",   mass=1.673e-27,  charge=1.602e-19),
@@ -214,9 +213,9 @@ PARTICLES = [
 PARTICLES_BY_NAME = {p.name: p for p in PARTICLES}
 
 
-# ══════════════════════════════════════════════════════
+
 #  GUI на FreeSimpleGUI
-# ══════════════════════════════════════════════════════
+
 
 sg.theme("LightBlue2")   # тема оформления
 
@@ -235,7 +234,7 @@ layout = [
     [sg.HorizontalSeparator()],
 
     # Поля результатов (readonly — только для чтения)
-    [sg.Text("Масса:"),                    sg.Input("—", key="-MASS-",    size=(25,1), readonly=True)],
+    [sg.Text("Масса:"),                    sg.Input("—", key="-MASS-",    size=(25,1), readonly=True)],#
     [sg.Text("Заряд:"),                    sg.Input("—", key="-CHARGE-",  size=(25,1), readonly=True)],
     [sg.Text("Удельный заряд:"),           sg.Input("—", key="-SPEC-",    size=(25,1), readonly=True)],
     [sg.Text("Комптоновская длина волны:"), sg.Input("—", key="-COMPTON-", size=(25,1), readonly=True)],
@@ -265,7 +264,7 @@ while True:
     if event == sg.WIN_CLOSED:
         break
 
-    # ── Кнопка "Рассчитать" ───────────────────────────
+    # Кнопка "Рассчитать" 
     if event == "Рассчитать":
         name = values["-COMBO-"]
         particle = PARTICLES_BY_NAME[name]   # получаем объект частицы
@@ -283,7 +282,7 @@ while True:
 
         current_result = data   # запоминаем для сохранения
 
-    # ── Сохранение текущей частицы в Word ────────────
+    # Сохранение текущей частицы в Word 
     if event == "-WORD1-":
         if current_result is None:
             sg.popup_error("Сначала нажмите «Рассчитать»!")
@@ -295,7 +294,7 @@ while True:
                 Report([current_result]).v_word(path)
                 sg.popup(f"Сохранено:\n{path}")
 
-    # ── Сохранение текущей частицы в Excel ───────────
+    # Сохранение текущей частицы в Excel 
     if event == "-XLSX1-":
         if current_result is None:
             sg.popup_error("Сначала нажмите «Рассчитать»!")
@@ -307,7 +306,7 @@ while True:
                 Report([current_result]).v_excel(path)
                 sg.popup(f"Сохранено:\n{path}")
 
-    # ── Сохранение всех частиц в Word ─────────────────
+    # Сохранение всех частиц в Word 
     if event == "-WORD_ALL-":
         path = sg.popup_get_file("Сохранить как", save_as=True,
                                  file_types=(("Word", "*.docx"),),
@@ -317,7 +316,7 @@ while True:
             Report(all_results).v_word(path)
             sg.popup(f"Сохранено:\n{path}")
 
-    # ── Сохранение всех частиц в Excel ────────────────
+    # Сохранение всех частиц в Excel 
     if event == "-XLSX_ALL-":
         path = sg.popup_get_file("Сохранить как", save_as=True,
                                  file_types=(("Excel", "*.xlsx"),),
